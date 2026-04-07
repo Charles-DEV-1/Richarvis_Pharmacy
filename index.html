@@ -5,456 +5,1000 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Richavis Pharmacy and Super Store</title>
   <style>
-    :root{
-      --bg:#fffaf8;--bg2:#f8f1f5;--panel:rgba(255,255,255,.9);--card:rgba(255,255,255,.95);
-      --text:#302735;--muted:#7d6f7d;--line:rgba(95,76,104,.12);--peach:#e7b4a4;
-      --gold:#efc6b8;--sage:#c8b5dd;--shadow:0 22px 60px rgba(103,81,112,.12);--r1:32px;--r2:24px;--r3:18px;
-      --w:min(1160px,calc(100% - 2rem));
+    :root {
+      --bg: #fffaf8;
+      --bg2: #f8f1f5;
+      --surface: #ffffff;
+      --surface-soft: #fbf4f7;
+      --surface-tint: #fff7f4;
+      --text: #302735;
+      --muted: #7d6f7d;
+      --line: rgba(95, 76, 104, 0.12);
+      --green: #e7b4a4;
+      --green-deep: #8e6775;
+      --green-soft: #efe2f5;
+      --peach: #e7b4a4;
+      --gold: #efc6b8;
+      --sage: #c8b5dd;
+      --shadow: 0 24px 60px rgba(103, 81, 112, 0.12);
+      --shadow-soft: 0 14px 32px rgba(103, 81, 112, 0.08);
+      --radius-xl: 34px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
+      --container: min(1180px, calc(100% - 2rem));
+      --transition: 0.3s ease;
     }
-    *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{
-      font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;color:var(--text);line-height:1.6;min-height:100vh;
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       background:
-        radial-gradient(circle at 12% 18%,rgba(200,181,221,.22),transparent 24%),
-        radial-gradient(circle at 86% 10%,rgba(231,180,164,.24),transparent 20%),
-        radial-gradient(circle at 80% 75%,rgba(239,198,184,.18),transparent 20%),
-        linear-gradient(180deg,var(--bg) 0%,#fffdfb 48%,var(--bg2) 100%);
-      overflow-x:hidden
+        radial-gradient(circle at 12% 18%, rgba(200, 181, 221, 0.22), transparent 24%),
+        radial-gradient(circle at 86% 10%, rgba(231, 180, 164, 0.24), transparent 20%),
+        radial-gradient(circle at 80% 75%, rgba(239, 198, 184, 0.18), transparent 20%),
+        linear-gradient(180deg, var(--bg) 0%, #fffdfb 48%, var(--bg2) 100%);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
     }
-    a{text-decoration:none;color:inherit}
-    .wrap{width:var(--w);margin:auto}
-    .page{position:relative}
-    .top{
-      border-bottom:1px solid rgba(95,76,104,.08);background:rgba(255,252,250,.82);backdrop-filter:blur(12px);
-      position:sticky;top:0;z-index:1200
+
+    img {
+      display: block;
+      width: 100%;
+      object-fit: cover;
     }
-    .top .wrap{display:flex;justify-content:space-between;gap:1rem;padding:.8rem 0;color:var(--muted);font-size:.92rem}
-    .nav{
-      margin-top:1rem;padding:1rem 1.2rem;border-radius:999px;display:flex;align-items:center;justify-content:space-between;gap:1rem;
-      background:rgba(255,255,255,.84);border:1px solid var(--line);box-shadow:0 16px 36px rgba(103,81,112,.1);backdrop-filter:blur(16px);
-      position:sticky;top:.8rem;z-index:1300
+
+    a {
+      color: inherit;
+      text-decoration: none;
     }
-    .brand{display:flex;align-items:center;gap:.85rem}
-    .mark{
-      width:46px;height:46px;border-radius:16px;display:grid;place-items:center;font-weight:800;color:#2d2433;
-      background:linear-gradient(135deg,var(--gold),var(--peach),var(--sage));box-shadow:0 12px 24px rgba(200,181,221,.18)
+
+    .container {
+      width: var(--container);
+      margin: 0 auto;
     }
-    .brand b{display:block;font-size:1rem}
-    .brand span{display:block;font-size:.82rem;color:var(--muted)}
-    .links{display:flex;gap:1.1rem;flex-wrap:wrap;color:var(--muted)}
-    .links a{transition:.25s}
-    .links a:hover{color:var(--gold);transform:translateY(-2px)}
-    .menu-toggle{display:none;position:relative}
-    .menu-toggle summary{
-      list-style:none;width:52px;height:52px;border-radius:18px;display:grid;place-items:center;cursor:pointer;
-      background:rgba(255,255,255,.92);border:1px solid var(--line);transition:.3s
+
+    .section {
+      padding: 5rem 0;
     }
-    .menu-toggle summary::-webkit-details-marker{display:none}
-    .menu-toggle summary:hover{background:#fff}
-    .burger,.burger:before,.burger:after{
-      content:"";display:block;width:20px;height:2px;border-radius:999px;background:var(--text);transition:.3s
+
+    .section-head {
+      max-width: 760px;
+      margin: 0 auto 2.4rem;
+      text-align: center;
     }
-    .burger:before{transform:translateY(-6px)}
-    .burger:after{transform:translateY(4px)}
-    .menu-toggle[open] .burger{background:transparent}
-    .menu-toggle[open] .burger:before{transform:translateY(0) rotate(45deg)}
-    .menu-toggle[open] .burger:after{transform:translateY(-2px) rotate(-45deg)}
-    .menu-panel{
-      position:absolute;right:0;top:calc(100% + .8rem);width:min(320px,calc(100vw - 2rem));padding:1rem;border-radius:24px;
-      background:rgba(255,255,255,.98);border:1px solid var(--line);box-shadow:0 24px 56px rgba(103,81,112,.16);display:grid;gap:.85rem;z-index:10
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.55rem 0.95rem;
+      margin-bottom: 1rem;
+      border-radius: 999px;
+      background: var(--green-soft);
+      color: var(--green-deep);
+      border: 1px solid var(--line);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
-    .menu-links{display:grid;gap:.45rem}
-    .menu-links a{
-      padding:.85rem .95rem;border-radius:16px;background:#fffafc;border:1px solid rgba(95,76,104,.08);color:var(--text)
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--peach);
+      box-shadow: 0 0 0 6px rgba(231, 180, 164, 0.12);
     }
-    .menu-contact{
-      padding:1rem;border-radius:18px;background:#fff7f5;border:1px solid rgba(95,76,104,.08);display:grid;gap:.4rem
+
+    h1, h2, h3 {
+      color: var(--text);
+      letter-spacing: -0.03em;
+      line-height: 1.05;
     }
-    .menu-contact b{font-size:1rem}
-    .menu-contact span{color:var(--muted);font-size:.9rem}
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;padding:.95rem 1.35rem;border-radius:999px;
-      font-weight:700;transition:.3s;gap:.5rem
+
+    h1 {
+      font-size: clamp(2.8rem, 7vw, 5rem);
     }
-    .btn.p{background:linear-gradient(135deg,var(--gold),var(--sage));color:#2d2433;box-shadow:0 16px 32px rgba(200,181,221,.24)}
-    .btn.p:hover{transform:translateY(-3px);box-shadow:0 22px 38px rgba(200,181,221,.32)}
-    .btn.s{background:rgba(255,255,255,.78);border:1px solid var(--line)}
-    .btn.s:hover{transform:translateY(-3px);background:#fff}
-    .hero{padding:3.4rem 0 2.4rem}
-    .hero-grid,.about,.cta,.contact{display:grid;grid-template-columns:1.08fr .92fr;gap:1.3rem}
-    .hero-main,.hero-side,.box,.panel,.card,.contact-card{
-      border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(14px)
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin-bottom: 0.9rem;
     }
-    .hero-main{
-      padding:clamp(2rem,4vw,4rem);border-radius:var(--r1);
-      background:linear-gradient(160deg,rgba(255,255,255,.98),rgba(251,244,247,.96));position:relative;overflow:hidden
+
+    h3 {
+      font-size: 1.15rem;
+      margin-bottom: 0.45rem;
     }
-    .hero-main:after{
-      content:"";position:absolute;right:-70px;bottom:-100px;width:240px;height:240px;border-radius:50%;
-      background:radial-gradient(circle,rgba(200,181,221,.28),transparent 70%)
+
+    p {
+      color: var(--muted);
+      font-size: 1rem;
     }
-    .tag,.label{
-      display:inline-block;padding:.52rem .92rem;border-radius:999px;font-size:.84rem;border:1px solid var(--line);
-      background:rgba(231,180,164,.12);color:#8e6775
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      padding: 1rem 0 0;
+      backdrop-filter: blur(16px);
     }
-    h1,h2{font-family:Georgia,"Times New Roman",serif;line-height:1.02;letter-spacing:-.03em}
-    h1{font-size:clamp(2.8rem,7vw,5.1rem);max-width:10ch;margin:1rem 0}
-    .hero-main p{max-width:58ch;color:#65596a;font-size:1.05rem}
-    .hero-note{margin-top:.9rem}
-    .trust{color:#8e6775;font-size:.92rem;font-weight:600;letter-spacing:.01em}
-    .actions{display:flex;gap:.9rem;flex-wrap:wrap;margin:1.6rem 0 1.8rem}
-    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
-    .stat,.mini,.tile,.prod,.svc,.reason{
-      background:rgba(255,255,255,.82);border:1px solid var(--line);border-radius:var(--r3);padding:1rem;transition:.3s
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 1.2rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
     }
-    .stat:hover,.mini:hover,.tile:hover,.prod:hover,.svc:hover,.reason:hover{transform:translateY(-6px);background:#fff}
-    .stat b,.mini b{display:block;color:#8e6775;font-size:1.15rem;margin-bottom:.28rem}
-    .stat span,.mini span,.tile span,.svc p,.prod p,.reason p{color:var(--muted);font-size:.92rem}
-    .hero-side{display:grid;gap:1.2rem}
-    .panel,.box,.contact-card{background:var(--panel);border-radius:var(--r1);padding:1.35rem}
-    .head{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1rem}
-    .chip{padding:.42rem .78rem;border-radius:999px;background:rgba(200,181,221,.18);color:#8e6775;font-size:.83rem;font-weight:700}
-    .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
-    .tile i,.ic{
-      width:46px;height:46px;border-radius:14px;display:grid;place-items:center;margin-bottom:.8rem;
-      background:linear-gradient(135deg,var(--gold),var(--sage));color:#2d2433;font-style:normal;font-weight:800
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      min-width: 0;
     }
-    .tile h3,.svc h3,.prod h3,.reason h3{font-size:1.03rem;margin-bottom:.38rem}
-    section{padding:2.7rem 0}
-    .sec{text-align:center;max-width:760px;margin:0 auto 2.2rem}
-    .sec h2{font-size:clamp(2.1rem,5vw,3.3rem);margin:.75rem 0}
-    .sec p{color:var(--muted)}
-    .about .box:first-child p{color:#65596a;font-size:1.02rem;margin-bottom:1rem}
-    .about .box:last-child{display:grid;gap:1rem}
-    .services,.products,.reasons{display:grid;gap:1.2rem}
-    .services{grid-template-columns:repeat(3,1fr)}
-    .products{grid-template-columns:repeat(4,1fr)}
-    .reasons{grid-template-columns:repeat(3,1fr)}
-    .svc,.prod,.reason,.contact-card{background:var(--card);border-radius:var(--r2)}
-    .prod{position:relative;overflow:hidden}
-    .prod:after{
-      content:"";position:absolute;right:-34px;bottom:-52px;width:140px;height:140px;border-radius:50%;
-      background:radial-gradient(circle,rgba(200,181,221,.2),transparent 68%);transition:.35s
+
+    .brand-mark {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--gold), var(--peach), var(--sage));
+      color: #2d2433;
+      box-shadow: 0 12px 24px rgba(200, 181, 221, 0.18);
     }
-    .prod:hover:after{transform:scale(1.16)}
-    .small{display:inline-block;margin-top:.95rem;padding:.35rem .7rem;border-radius:999px;font-size:.78rem;color:#8e6775;background:rgba(200,181,221,.16)}
-    .cta{
-      padding:clamp(1.6rem,4vw,2.4rem);border-radius:var(--r1);background:
-      linear-gradient(135deg,rgba(231,180,164,.18),rgba(200,181,221,.18)),rgba(255,255,255,.92);
-      border:1px solid var(--line);box-shadow:var(--shadow);align-items:center
+
+    .brand-text strong {
+      display: block;
+      font-size: 1rem;
     }
-    .cta h2{font-size:clamp(2rem,4vw,2.9rem);margin:.7rem 0}
-    .cta p,.contact-card p{color:#65596a}
-    .cta .actions{justify-content:flex-end;margin:0}
-    .contact-card .actions{margin:1.3rem 0}
-    .lines{display:grid;gap:.75rem;color:var(--muted)}
-    .lines b{color:var(--text);margin-right:.35rem}
-    footer{padding:2rem 0 2.4rem;text-align:center;color:var(--muted);font-size:.93rem}
-    @media (max-width:1024px){
-      .hero-grid,.about,.cta,.contact{grid-template-columns:1fr}
-      .services,.reasons,.products{grid-template-columns:repeat(2,1fr)}
-      .cta .actions{justify-content:flex-start}
+
+    .brand-text span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.82rem;
     }
-    @media (max-width:760px){
-      .wrap{width:min(100% - 1rem,1160px)}
-      .top .wrap{flex-direction:column;align-items:flex-start;gap:.35rem;padding:.7rem 0;font-size:.88rem}
-      .top{z-index:2000}
-      .nav{padding:.85rem 1rem;border-radius:24px;top:.55rem;flex-wrap:wrap;align-items:center}
-      .brand{min-width:0;flex:1}
-      .brand b{font-size:.92rem;line-height:1.2}
-      .brand span{font-size:.76rem}
-      .links{display:none}
-      .menu-toggle{display:block;margin-left:auto}
-      .menu-toggle[open]{width:100%}
-      .menu-panel{
-        position:static;width:100%;margin-top:.85rem;
-        max-height:none;overflow:visible
+
+    .nav-links {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .nav-links a {
+      transition: color var(--transition), transform var(--transition);
+    }
+
+    .nav-links a:hover {
+      color: var(--green-deep);
+      transform: translateY(-2px);
+    }
+
+    .hero {
+      padding: 1.5rem 0 3.5rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.02fr 0.98fr;
+      gap: 1.2rem;
+      align-items: stretch;
+    }
+
+    .hero-copy {
+      padding: clamp(2rem, 4vw, 3.5rem);
+      border-radius: var(--radius-xl);
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.98), rgba(251, 244, 247, 0.96));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-copy::after {
+      content: "";
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      right: -90px;
+      bottom: -110px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200, 181, 221, 0.28), transparent 70%);
+    }
+
+    .hero-copy p {
+      max-width: 58ch;
+      margin-top: 1rem;
+      font-size: 1.04rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem 1.45rem;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition), border-color var(--transition);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold), var(--sage));
+      color: #2d2433;
+      box-shadow: 0 18px 34px rgba(200, 181, 221, 0.24);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 24px 42px rgba(200, 181, 221, 0.32);
+    }
+
+    .btn-secondary {
+      background: #fff;
+      border: 1px solid var(--line);
+      color: var(--green-deep);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-3px);
+      background: rgba(255, 255, 255, 0.88);
+    }
+
+    .hero-points {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .hero-point {
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+    }
+
+    .hero-point strong {
+      display: block;
+      color: var(--green-deep);
+      margin-bottom: 0.3rem;
+    }
+
+    .hero-visual {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .hero-image {
+      min-height: 100%;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .hero-image img {
+      height: 100%;
+      min-height: 540px;
+    }
+
+    .hero-badge {
+      position: absolute;
+      right: 1rem;
+      bottom: 1rem;
+      padding: 1rem 1.1rem;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+      max-width: 240px;
+    }
+
+    .hero-badge strong {
+      display: block;
+      color: var(--green-deep);
+      margin-bottom: 0.2rem;
+    }
+
+    .search-wrap {
+      margin-top: -1rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .search-card {
+      padding: 1.25rem;
+      border-radius: var(--radius-xl);
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .search-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .search-header p {
+      max-width: 54ch;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 1.1rem 1.15rem;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      font: inherit;
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .search-input:focus {
+      border-color: rgba(200, 181, 221, 0.42);
+      box-shadow: 0 0 0 4px rgba(200, 181, 221, 0.14);
+    }
+
+    .results-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 1rem;
+      color: var(--muted);
+      font-size: 0.94rem;
+      flex-wrap: wrap;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 1.1rem;
+    }
+
+    .product-card {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(243, 250, 244, 0.92));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow);
+      border-color: rgba(200, 181, 221, 0.26);
+    }
+
+    .product-card img {
+      height: 190px;
+    }
+
+    .product-body {
+      display: grid;
+      gap: 0.8rem;
+      padding: 1rem;
+    }
+
+    .product-tags {
+      display: flex;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+    }
+
+    .tag-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.35rem 0.65rem;
+      border-radius: 999px;
+      background: var(--green-soft);
+      color: var(--green-deep);
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+
+    .trust-grid,
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.2rem;
+    }
+
+    .trust-card,
+    .step-card,
+    .contact-card {
+      padding: 1.5rem;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(243, 250, 244, 0.92));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .trust-card strong,
+    .step-card strong {
+      display: block;
+      margin-bottom: 0.4rem;
+      color: var(--green-deep);
+      font-size: 1.05rem;
+    }
+
+    .check {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 1rem;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--gold), var(--sage));
+      color: #2d2433;
+      font-weight: 800;
+      box-shadow: 0 12px 24px rgba(200, 181, 221, 0.2);
+    }
+
+    .step-number {
+      display: inline-grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      margin-bottom: 1rem;
+      border-radius: 50%;
+      background: var(--green-soft);
+      color: var(--green-deep);
+      font-weight: 800;
+    }
+
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 1.2rem;
+      align-items: stretch;
+    }
+
+    .contact-card {
+      padding: 2rem;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(238, 248, 240, 0.92));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .contact-card p {
+      margin-top: 1rem;
+      margin-bottom: 1.6rem;
+      max-width: 54ch;
+    }
+
+    .contact-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.6rem;
+    }
+
+    .contact-lines {
+      display: grid;
+      gap: 0.7rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .contact-lines strong {
+      color: var(--text);
+      margin-right: 0.35rem;
+    }
+
+    .contact-visual {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--line);
+    }
+
+    .contact-visual img {
+      height: 100%;
+      min-height: 420px;
+    }
+
+    .empty-state {
+      display: none;
+      padding: 1.4rem;
+      border-radius: var(--radius-lg);
+      text-align: center;
+      background: var(--surface);
+      border: 1px dashed rgba(200, 181, 221, 0.28);
+      color: var(--muted);
+    }
+
+    footer {
+      padding: 2rem 0 2.5rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    @media (max-width: 1120px) {
+      .products-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
-      .hero{padding:2rem 0 1.5rem}
-      section{padding:2rem 0}
-      .hero-main,.panel,.box,.contact-card,.cta{padding:1.2rem}
-      h1,.sec h2,.cta h2{max-width:none}
-      h1{font-size:clamp(2.2rem,11vw,3.2rem)}
-      .hero-main p,.sec p{font-size:.96rem}
-      .trust{font-size:.88rem;line-height:1.7}
-      .actions,.cta .actions{flex-direction:column;align-items:stretch}
-      .btn{width:100%}
-      .stats,.grid2,.services,.products,.reasons{grid-template-columns:1fr}
-      .hero-side,.about,.contact{gap:1rem}
-      .sec{margin:0 auto 1.5rem}
-      .menu-panel .btn{width:100%}
+
+      .hero-grid,
+      .contact-wrap {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .trust-grid,
+      .steps-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .products-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero-points {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .topbar {
+        position: static;
+      }
+
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+        border-radius: 28px;
+      }
+
+      .nav-links {
+        width: 100%;
+        justify-content: space-between;
+        gap: 0.8rem;
+      }
+
+      .section {
+        padding: 4rem 0;
+      }
+
+      .hero-actions,
+      .contact-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-image img,
+      .contact-visual img {
+        min-height: 320px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="page">
-    <div class="top">
-      <div class="wrap">
-        <div>Trusted healthcare, wellness products, and everyday essentials in one convenient store.</div>
-        <div>WhatsApp Orders: 09163606206</div>
-      </div>
-    </div>
-
-    <div class="wrap">
+  <header class="topbar">
+    <div class="container">
       <nav class="nav">
-        <a class="brand" href="#top">
-          <div class="mark">R</div>
-          <div>
-            <b>Richavis Pharmacy and Super Store</b>
-            <span>Modern care with a richer retail feel</span>
-          </div>
+        <a href="#top" class="brand">
+          <span class="brand-mark">R</span>
+          <span class="brand-text">
+            <strong>Richavis Pharmacy and Super Store</strong>
+            <span>Quality medicines, fast response, easy ordering</span>
+          </span>
         </a>
-        <div class="links">
-          <a href="#about">About</a>
-          <a href="#services">Services</a>
+        <div class="nav-links">
+          <a href="#search">Search</a>
           <a href="#products">Products</a>
+          <a href="#trust">Trust</a>
+          <a href="#how">How It Works</a>
           <a href="#contact">Contact</a>
         </div>
-        <details class="menu-toggle">
-          <summary aria-label="Open menu">
-            <span class="burger"></span>
-          </summary>
-          <div class="menu-panel">
-            <div class="menu-links">
-              <a href="#about">About</a>
-              <a href="#services">Services</a>
-              <a href="#products">Products</a>
-            </div>
-            <div class="menu-contact">
-              <b>Contact Us</b>
-              <span>09163606206</span>
-              <span>Fast response / Reliable service / Easy ordering</span>
-            </div>
-            <a class="btn p" href="https://wa.me/2349163606206?text=Hello%20I%20want%20to%20order%20from%20Richavis%20Pharmacy%20and%20Super%20Store" target="_blank" rel="noopener noreferrer">Order on WhatsApp</a>
-          </div>
-        </details>
       </nav>
     </div>
+  </header>
 
-    <main id="top">
-      <section class="hero">
-        <div class="wrap hero-grid">
-          <div class="hero-main">
-            <span class="tag">Premium Pharmacy Experience</span>
-            <h1>Feel better, shop smarter, and stay cared for.</h1>
-            <p>Richavis Pharmacy and Super Store helps customers shop for medicines, wellness products, beauty essentials, and everyday needs in one convenient place.</p>
-            <p class="hero-note">Customers can quickly browse products and order directly via WhatsApp.</p>
-            <p class="trust">Fast response / Reliable service / Easy ordering</p>
-            <div class="actions">
-              <a class="btn p" href="https://wa.me/2349163606206?text=Hello%20I%20want%20to%20order%20from%20Richavis%20Pharmacy%20and%20Super%20Store" target="_blank" rel="noopener noreferrer">Order on WhatsApp</a>
-              <a class="btn s" href="#products">Explore Products</a>
-            </div>
-            <div class="stats">
-              <div class="stat"><b>Fast Orders</b><span>Quick WhatsApp response and direct customer support.</span></div>
-              <div class="stat"><b>Trusted Care</b><span>Quality products people can feel confident buying.</span></div>
-              <div class="stat"><b>Easy Ordering</b><span>Customers can message on WhatsApp and place orders instantly.</span></div>
-            </div>
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">Trusted Local Pharmacy</span>
+          <h1>Your Trusted Pharmacy</h1>
+          <p>Quality medicines, fast response, easy ordering.</p>
+          <p>Search by medicine name or what you're treating, find the right product quickly, and place your order directly on WhatsApp in seconds.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://wa.me/2349163606206?text=Hello%20I%20want%20to%20order%20medicines" target="_blank" rel="noopener noreferrer">Order on WhatsApp</a>
+            <a class="btn btn-secondary" href="#products">Browse Products</a>
           </div>
-
-          <div class="hero-side">
-            <div class="panel">
-              <div class="head">
-                <h3>Why customers choose us</h3>
-                <span class="chip">Client Favorite</span>
-              </div>
-              <div class="grid2">
-                <div class="tile">
-                  <i>1</i>
-                  <h3>Trusted Medications</h3>
-                  <span>Everyday essentials presented with a professional feel.</span>
-                </div>
-                <div class="tile">
-                  <i>2</i>
-                  <h3>Super Store Convenience</h3>
-                  <span>Healthcare and daily items in one useful destination.</span>
-                </div>
-                <div class="tile">
-                  <i>3</i>
-                  <h3>Easy Ordering</h3>
-                  <span>Simple WhatsApp flow that helps convert faster.</span>
-                </div>
-                <div class="tile">
-                  <i>4</i>
-                  <h3>Stylish Presence</h3>
-                  <span>Customers enjoy a clean, easy experience when browsing and ordering.</span>
-                </div>
-              </div>
+          <div class="hero-points">
+            <div class="hero-point">
+              <strong>Genuine Medicines</strong>
+              <span>Reliable products for everyday healthcare needs.</span>
             </div>
-
-            <div class="box">
-              <div class="head">
-                <h3>Store Highlights</h3>
-                <span class="chip">Always Ready</span>
-              </div>
-              <div class="grid2">
-                <div class="mini"><b>Prescription Support</b><span>Helpful, dependable, and customer-focused.</span></div>
-                <div class="mini"><b>Wellness Picks</b><span>Vitamins, immunity support, and self-care products.</span></div>
-                <div class="mini"><b>Beauty Essentials</b><span>Daily personal care and lifestyle add-ons.</span></div>
-                <div class="mini"><b>09163606206</b><span>Direct line for orders and quick questions.</span></div>
-              </div>
+            <div class="hero-point">
+              <strong>Quick WhatsApp Support</strong>
+              <span>Fast replies and simple order confirmation.</span>
+            </div>
+            <div class="hero-point">
+              <strong>Easy Search</strong>
+              <span>Search by product name or symptoms instantly.</span>
             </div>
           </div>
         </div>
-      </section>
 
-      <section id="about">
-        <div class="wrap">
-          <div class="sec">
-            <span class="label">About Richavis</span>
-            <h2>A pharmacy brand with warmth, trust, and everyday elegance.</h2>
-            <p>Customers can find trusted products quickly and order without stress.</p>
-          </div>
-          <div class="about">
-            <div class="box">
-              <p>Richavis Pharmacy and Super Store is built for customers who want trusted products in a clean, modern, and easy-to-use environment. The business can present itself as both dependable and stylish, making the brand feel more serious and more premium at first glance.</p>
-              <p>From medicine to daily essentials, customers can shop with confidence and get the products they need quickly and conveniently.</p>
-            </div>
-            <div class="box">
-              <div class="mini"><b>All-in-one shopping</b><span>Medicine, wellness, beauty, and daily essentials together.</span></div>
-              <div class="mini"><b>Better first impression</b><span>Aesthetic colors and deeper styling help build trust fast.</span></div>
-              <div class="mini"><b>Direct conversion</b><span>Clear calls to action keep people moving toward contact.</span></div>
+        <div class="hero-visual">
+          <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=1200&q=80" alt="Pharmacy shelves">
+            <div class="hero-badge">
+              <strong>Fast ordering, real convenience</strong>
+              <span>Search medicines and order directly on WhatsApp.</span>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section id="services">
-        <div class="wrap">
-          <div class="sec">
-            <span class="label">Services</span>
-            <h2>More than medicine, built around complete everyday care.</h2>
-            <p>Customers get helpful service and a simple way to find what they need.</p>
-          </div>
-          <div class="services">
-            <article class="svc">
-              <div class="ic">Rx</div>
-              <h3>Prescription Support</h3>
-              <p>Reliable pharmacy assistance for treatments, wellness products, and daily healthcare needs.</p>
-            </article>
-            <article class="svc">
-              <div class="ic">W</div>
-              <h3>Wellness Essentials</h3>
-              <p>Supplements, vitamins, immunity support, and self-care products for healthier routines.</p>
-            </article>
-            <article class="svc">
-              <div class="ic">S</div>
-              <h3>Super Store Picks</h3>
-              <p>Convenient household and personal items that make the store more useful for busy customers.</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section id="products">
-        <div class="wrap">
-          <div class="sec">
-            <span class="label">Featured Products</span>
-            <h2>Popular essentials customers ask for again and again.</h2>
-            <p>These cards add more selling power while keeping the store presentation familiar and practical.</p>
-          </div>
-          <div class="products">
-            <article class="prod">
-              <div class="ic">P</div>
-              <h3>Paracetamol</h3>
-              <p>Reliable relief for fever, mild pain, headaches, and everyday discomfort.</p>
-              <span class="small">Everyday essential</span>
-            </article>
-            <article class="prod">
-              <div class="ic">A</div>
-              <h3>Amoxicillin</h3>
-              <p>A trusted antibiotic option available with the right pharmacy guidance.</p>
-              <span class="small">Trusted treatment</span>
-            </article>
-            <article class="prod">
-              <div class="ic">V</div>
-              <h3>Vitamin C</h3>
-              <p>Daily support for immunity, energy, and healthier wellness habits.</p>
-              <span class="small">Wellness boost</span>
-            </article>
-            <article class="prod">
-              <div class="ic">C</div>
-              <h3>Cough Syrup</h3>
-              <p>Comforting support for cough relief and throat irritation management.</p>
-              <span class="small">Family care</span>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <div class="wrap">
-          <div class="sec">
-            <span class="label">Why Choose Us</span>
-            <h2>Designed to make the business feel credible, modern, and customer-first.</h2>
-            <p>Great pharmacy websites should feel calm, beautiful, and easy to trust, not plain or forgettable.</p>
-          </div>
-          <div class="reasons">
-            <article class="reason">
-              <div class="ic">T</div>
-              <h3>Trusted Brand Feel</h3>
-              <p>A richer visual identity makes the business feel more established and dependable.</p>
-            </article>
-            <article class="reason">
-              <div class="ic">E</div>
-              <h3>Easy Ordering Flow</h3>
-              <p>Customers can move from browsing to messaging the store without friction.</p>
-            </article>
-            <article class="reason">
-              <div class="ic">C</div>
-              <h3>Easy to Contact</h3>
-              <p>Easy for customers to contact and place orders instantly.</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <div class="wrap cta">
-          <div>
-            <span class="label">Quick Order</span>
-            <h2>Need medications or daily essentials right away?</h2>
-            <p>Message Richavis Pharmacy and Super Store directly on WhatsApp for a smooth and convenient order experience.</p>
-          </div>
-          <div class="actions">
-            <a class="btn p" href="https://wa.me/2349163606206?text=Hello%20I%20want%20to%20order%20from%20Richavis%20Pharmacy%20and%20Super%20Store" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
-            <a class="btn s" href="#contact">View Contact</a>
-          </div>
-        </div>
-      </section>
-
-      <section id="contact">
-        <div class="wrap">
-          <div class="sec">
-            <span class="label">Contact</span>
-            <h2>Let customers reach the brand fast and confidently.</h2>
-            <p>Customers can reach the store quickly, ask questions, and place orders without delay.</p>
-          </div>
-          <div class="contact">
-            <div class="contact-card">
-              <p>Ready to place an order, ask about availability, or get product guidance? Reach out directly and let Richavis Pharmacy and Super Store assist you with speed and care.</p>
-              <div class="actions">
-                <a class="btn p" href="https://wa.me/2349163606206?text=Hello%20I%20want%20to%20order%20from%20Richavis%20Pharmacy%20and%20Super%20Store" target="_blank" rel="noopener noreferrer">Order on WhatsApp</a>
-              </div>
-              <div class="lines">
-                <div><b>Business:</b> Richavis Pharmacy and Super Store</div>
-                <div><b>Phone:</b> 09163606206</div>
-                <div><b>Support:</b> Fast direct WhatsApp orders and inquiries</div>
-              </div>
-            </div>
-            <div class="contact-card">
-              <div class="mini"><b>Fast response</b><span>Customers can get quick replies for orders and product availability.</span></div>
-              <div class="mini"><b>Reliable service</b><span>Trusted support helps customers shop with confidence.</span></div>
-              <div class="mini"><b>Easy ordering</b><span>WhatsApp makes it simple to contact the store and place orders instantly.</span></div>
+    <section class="section" id="search">
+      <div class="container search-wrap">
+        <div class="search-card">
+          <div class="search-header">
+            <div>
+              <span class="eyebrow">Search Medicines</span>
+              <h2>Find what you need fast</h2>
+              <p>Search by medicine name or what you are treating. For example: Paracetamol, malaria, headache, cough, fever.</p>
             </div>
           </div>
+          <input id="searchInput" class="search-input" type="text" placeholder="Search medicines or what you're treating (e.g. Paracetamol, malaria, headache)">
+          <div class="results-meta">
+            <span id="resultsCount">Showing featured products</span>
+            <span id="resultsHint">Search works with medicine names and symptoms</span>
+          </div>
         </div>
-      </section>
-    </main>
+      </div>
+    </section>
 
-    <footer>
-      <div class="wrap">&copy; 2026 Richavis Pharmacy and Super Store. All rights reserved.</div>
-    </footer>
-  </div>
+    <section class="section" id="products">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Products</span>
+          <h2>Popular pharmacy essentials</h2>
+          <p>A few popular products show first. Search by drug name or sickness to bring out more medicines from the full catalog.</p>
+        </div>
+        <div id="productsGrid" class="products-grid"></div>
+        <div id="emptyState" class="empty-state">No matching product found. Try another medicine name or symptom like fever, malaria, pain, or cough.</div>
+      </div>
+    </section>
+
+    <section class="section" id="trust">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Why Customers Trust Us</span>
+          <h2>Built for confidence and convenience</h2>
+        </div>
+        <div class="trust-grid">
+          <div class="trust-card">
+            <div class="check">+</div>
+            <strong>Genuine medicines</strong>
+            <p>Products customers can trust for everyday treatment, relief, and wellness support.</p>
+          </div>
+          <div class="trust-card">
+            <div class="check">+</div>
+            <strong>Fast response on WhatsApp</strong>
+            <p>Quick communication makes it easy to ask questions and place orders without stress.</p>
+          </div>
+          <div class="trust-card">
+            <div class="check">+</div>
+            <strong>Trusted by local customers</strong>
+            <p>A pharmacy experience that feels simple, familiar, and ready for daily healthcare needs.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="how">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">How It Works</span>
+          <h2>Simple ordering in three steps</h2>
+        </div>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <strong>Search product</strong>
+            <p>Type a medicine name or symptom like headache, malaria, cold, or fever.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <strong>Click order</strong>
+            <p>Tap the WhatsApp button on the product you want to buy.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <strong>Confirm on WhatsApp</strong>
+            <p>Send your message and continue the order directly with the pharmacy.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container contact-wrap">
+        <div class="contact-card">
+          <span class="eyebrow">Contact</span>
+          <h2>Need help with an order?</h2>
+          <p>Reach out directly on WhatsApp for product availability, order support, and quick responses from Richavis Pharmacy and Super Store.</p>
+          <div class="contact-actions">
+            <a class="btn btn-primary" href="https://wa.me/2349163606206?text=Hello%20I%20want%20to%20order%20medicines" target="_blank" rel="noopener noreferrer">Order on WhatsApp</a>
+          </div>
+          <div class="contact-lines">
+            <div><strong>Business:</strong> Richavis Pharmacy and Super Store</div>
+            <div><strong>Phone:</strong> 09163606206</div>
+            <div><strong>Support:</strong> Fast product and order response on WhatsApp</div>
+          </div>
+        </div>
+        <div class="contact-visual">
+          <img src="https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=1200&q=80" alt="Pharmacy support desk">
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Richavis Pharmacy and Super Store. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    const products = [
+      {
+        name: "Paracetamol",
+        image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=900&q=80",
+        description: "A trusted pain and fever relief medicine commonly used for headaches, body pain, and mild fever.",
+        tags: ["headache", "pain", "fever", "body pain"],
+        featured: true
+      },
+      {
+        name: "Artemether Lumefantrine",
+        image: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&w=900&q=80",
+        description: "A common antimalarial treatment often used when managing malaria symptoms and recurring fever.",
+        tags: ["malaria", "fever", "body weakness"],
+        featured: true
+      },
+      {
+        name: "Cough Syrup",
+        image: "https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?auto=format&fit=crop&w=900&q=80",
+        description: "Helpful relief for cough, throat irritation, and common cold discomfort.",
+        tags: ["cough", "cold", "throat", "catarrh"],
+        featured: true
+      },
+      {
+        name: "Vitamin C",
+        image: "https://images.unsplash.com/photo-1615486511484-92e172cc4fe0?auto=format&fit=crop&w=900&q=80",
+        description: "Daily immune support and wellness supplement for general health and recovery.",
+        tags: ["immunity", "vitamin", "wellness", "recovery"],
+        featured: true
+      },
+      {
+        name: "Amoxicillin",
+        image: "https://images.unsplash.com/photo-1628771065518-0d82f1938462?auto=format&fit=crop&w=900&q=80",
+        description: "A widely used antibiotic available with proper pharmacy guidance and treatment advice.",
+        tags: ["infection", "antibiotic", "bacteria", "fever"]
+      },
+      {
+        name: "ORS Sachets",
+        image: "https://images.unsplash.com/photo-1579165466741-7f35e4755660?auto=format&fit=crop&w=900&q=80",
+        description: "Oral rehydration support for dehydration, diarrhea, and fluid replacement needs.",
+        tags: ["dehydration", "diarrhea", "stomach", "weakness"]
+      },
+      {
+        name: "Antacid Tablets",
+        image: "https://images.unsplash.com/photo-1584362917165-526a968579e8?auto=format&fit=crop&w=900&q=80",
+        description: "Quick relief for heartburn, indigestion, and stomach discomfort after meals.",
+        tags: ["ulcer", "heartburn", "indigestion", "stomach pain"]
+      },
+      {
+        name: "Allergy Relief",
+        image: "https://images.unsplash.com/photo-1628771065518-0d82f1938462?auto=format&fit=crop&w=900&q=80",
+        description: "Support for sneezing, itching, and mild allergic reactions caused by dust or seasonal triggers.",
+        tags: ["allergy", "itching", "sneezing", "catarrh"]
+      },
+      {
+        name: "Blood Tonic",
+        image: "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?auto=format&fit=crop&w=900&q=80",
+        description: "A supportive tonic commonly used to improve energy levels and daily nutritional balance.",
+        tags: ["blood tonic", "weakness", "energy", "fatigue"]
+      },
+      {
+        name: "Ibuprofen",
+        image: "https://images.unsplash.com/photo-1580281658629-33c43f5f1f3b?auto=format&fit=crop&w=900&q=80",
+        description: "Pain and inflammation relief for headaches, menstrual pain, and muscle discomfort.",
+        tags: ["pain", "headache", "inflammation", "menstrual pain"]
+      },
+      {
+        name: "Flagyl",
+        image: "https://images.unsplash.com/photo-1585435557343-3b092031a831?auto=format&fit=crop&w=900&q=80",
+        description: "Commonly requested support for stomach infections, diarrhea, and related discomfort.",
+        tags: ["diarrhea", "stomach infection", "toilet", "infection"]
+      },
+      {
+        name: "Diclofenac",
+        image: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&w=900&q=80",
+        description: "Pain relief often used for joint discomfort, swelling, and muscle aches.",
+        tags: ["pain", "joint pain", "swelling", "back pain"]
+      },
+      {
+        name: "Loratadine",
+        image: "https://images.unsplash.com/photo-1612531386530-97286d97c2d2?auto=format&fit=crop&w=900&q=80",
+        description: "Allergy relief for sneezing, itching, runny nose, and other mild reactions.",
+        tags: ["allergy", "runny nose", "itching", "sneezing"]
+      },
+      {
+        name: "Salbutamol Inhaler",
+        image: "https://images.unsplash.com/photo-1576602976047-174e57a47881?auto=format&fit=crop&w=900&q=80",
+        description: "Quick breathing support often used for asthma symptoms and chest tightness.",
+        tags: ["asthma", "breathing", "chest tightness", "wheezing"]
+      },
+      {
+        name: "Cetirizine",
+        image: "https://images.unsplash.com/photo-1628771065518-0d82f1938462?auto=format&fit=crop&w=900&q=80",
+        description: "Daily allergy support for itching, catarrh, watery eyes, and skin irritation.",
+        tags: ["allergy", "catarrh", "itching", "watery eyes"]
+      },
+      {
+        name: "Zinc Tablets",
+        image: "https://images.unsplash.com/photo-1615486363973-f79d875780fa?auto=format&fit=crop&w=900&q=80",
+        description: "Nutritional support commonly used for immunity, recovery, and general wellness.",
+        tags: ["immunity", "supplement", "recovery", "wellness"]
+      },
+      {
+        name: "Pregnancy Test Kit",
+        image: "https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=900&q=80",
+        description: "Simple home test kit for early pregnancy checks and quick confirmation.",
+        tags: ["pregnancy", "missed period", "test kit", "women health"]
+      },
+      {
+        name: "Flu Relief Capsules",
+        image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=900&q=80",
+        description: "Support for flu symptoms like catarrh, body pain, sneezing, and fever.",
+        tags: ["flu", "catarrh", "fever", "body pain"]
+      },
+      {
+        name: "Hydrogen Peroxide",
+        image: "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=900&q=80",
+        description: "Useful antiseptic support for minor wound cleaning and first aid needs.",
+        tags: ["wound", "antiseptic", "injury", "first aid"]
+      },
+      {
+        name: "Gentamicin Cream",
+        image: "https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?auto=format&fit=crop&w=900&q=80",
+        description: "Topical support commonly used for minor skin infections and irritation.",
+        tags: ["skin infection", "rash", "cream", "wound"]
+      },
+      {
+        name: "Buscopan",
+        image: "https://images.unsplash.com/photo-1580281658629-33c43f5f1f3b?auto=format&fit=crop&w=900&q=80",
+        description: "Common relief for stomach cramps, abdominal discomfort, and period pain.",
+        tags: ["stomach pain", "cramps", "abdominal pain", "period pain"]
+      },
+      {
+        name: "Eye Drops",
+        image: "https://images.unsplash.com/photo-1584362917165-526a968579e8?auto=format&fit=crop&w=900&q=80",
+        description: "Helpful support for dry eyes, redness, and mild eye irritation.",
+        tags: ["eye pain", "red eyes", "dry eyes", "eye irritation"]
+      },
+      {
+        name: "Glucose D",
+        image: "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?auto=format&fit=crop&w=900&q=80",
+        description: "Quick energy support for weakness, low strength, and general recovery.",
+        tags: ["weakness", "energy", "fatigue", "recovery"]
+      }
+    ];
+
+    const productsGrid = document.getElementById("productsGrid");
+    const searchInput = document.getElementById("searchInput");
+    const resultsCount = document.getElementById("resultsCount");
+    const resultsHint = document.getElementById("resultsHint");
+    const emptyState = document.getElementById("emptyState");
+    const featuredProducts = products.filter((product) => product.featured);
+
+    function makeWhatsAppLink(productName) {
+      return `https://wa.me/2349163606206?text=${encodeURIComponent(`Hello, I want to order ${productName}`)}`;
+    }
+
+    function renderProducts(list, query = "") {
+      productsGrid.innerHTML = list.map((product) => `
+        <article class="product-card" data-name="${product.name.toLowerCase()}" data-tags="${product.tags.join(" ").toLowerCase()}">
+          <img src="${product.image}" alt="${product.name}">
+          <div class="product-body">
+            <div>
+              <h3>${product.name}</h3>
+              <p>${product.description}</p>
+            </div>
+            <div class="product-tags">
+              ${product.tags.map((tag) => `<span class="tag-chip">${tag}</span>`).join("")}
+            </div>
+            <a class="btn btn-primary" href="${makeWhatsAppLink(product.name)}" target="_blank" rel="noopener noreferrer">Order on WhatsApp</a>
+          </div>
+        </article>
+      `).join("");
+
+      if (query) {
+        resultsCount.textContent = `Found ${list.length} product${list.length === 1 ? "" : "s"} for "${query}"`;
+        resultsHint.textContent = "Search by medicine name, sickness, or symptom";
+      } else {
+        resultsCount.textContent = `Showing ${list.length} featured product${list.length === 1 ? "" : "s"}`;
+        resultsHint.textContent = `${products.length - list.length}+ more medicines will appear when you search`;
+      }
+
+      emptyState.style.display = list.length ? "none" : "block";
+    }
+
+    function filterProducts(query) {
+      const value = query.trim().toLowerCase();
+
+      if (!value) {
+        renderProducts(featuredProducts);
+        return;
+      }
+
+      const filtered = products.filter((product) => {
+        const haystack = `${product.name} ${product.description} ${product.tags.join(" ")}`.toLowerCase();
+        return haystack.includes(value);
+      });
+
+      renderProducts(filtered, query.trim());
+    }
+
+    searchInput.addEventListener("input", (event) => {
+      filterProducts(event.target.value);
+    });
+
+    renderProducts(featuredProducts);
+  </script>
 </body>
 </html>

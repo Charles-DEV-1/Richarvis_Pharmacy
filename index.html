@@ -196,6 +196,109 @@
       transform: translateY(-2px);
     }
 
+    .menu-toggle {
+      display: none;
+      position: relative;
+      margin-left: auto;
+    }
+
+    .menu-toggle summary {
+      list-style: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--line);
+      transition: background var(--transition), transform var(--transition);
+    }
+
+    .menu-toggle summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .menu-toggle summary:hover {
+      background: #fff;
+      transform: translateY(-2px);
+    }
+
+    .burger,
+    .burger::before,
+    .burger::after {
+      content: "";
+      display: block;
+      width: 20px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--text);
+      transition: transform var(--transition), opacity var(--transition), background var(--transition);
+    }
+
+    .burger::before {
+      transform: translateY(-6px);
+    }
+
+    .burger::after {
+      transform: translateY(4px);
+    }
+
+    .menu-toggle[open] .burger {
+      background: transparent;
+    }
+
+    .menu-toggle[open] .burger::before {
+      transform: translateY(0) rotate(45deg);
+    }
+
+    .menu-toggle[open] .burger::after {
+      transform: translateY(-2px) rotate(-45deg);
+    }
+
+    .menu-panel {
+      display: grid;
+      gap: 0.8rem;
+      width: 100%;
+      margin-top: 0.85rem;
+      padding: 1rem;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.98);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .menu-links {
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .menu-links a {
+      padding: 0.85rem 0.95rem;
+      border-radius: 16px;
+      background: #fffafc;
+      border: 1px solid rgba(95, 76, 104, 0.08);
+      color: var(--text);
+    }
+
+    .menu-contact {
+      display: grid;
+      gap: 0.35rem;
+      padding: 1rem;
+      border-radius: 18px;
+      background: #fff7f5;
+      border: 1px solid rgba(95, 76, 104, 0.08);
+    }
+
+    .menu-contact b {
+      font-size: 1rem;
+    }
+
+    .menu-contact span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
     .hero {
       padding: 1.5rem 0 3.5rem;
     }
@@ -557,6 +660,10 @@
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
 
+      .product-card img {
+        height: 170px;
+      }
+
       .hero-grid,
       .contact-wrap {
         grid-template-columns: 1fr;
@@ -573,6 +680,10 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
+      .product-card img {
+        height: 150px;
+      }
+
       .hero-points {
         grid-template-columns: 1fr;
       }
@@ -584,19 +695,59 @@
       }
 
       .nav {
-        flex-direction: column;
-        align-items: flex-start;
-        border-radius: 28px;
+        align-items: center;
+        flex-wrap: wrap;
+        border-radius: 24px;
+        padding: 0.9rem 1rem;
+      }
+
+      .brand {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .brand-text strong {
+        font-size: 0.95rem;
+        line-height: 1.2;
+      }
+
+      .brand-text span {
+        font-size: 0.76rem;
       }
 
       .nav-links {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .menu-toggle[open] {
         width: 100%;
-        justify-content: space-between;
-        gap: 0.8rem;
       }
 
       .section {
-        padding: 4rem 0;
+        padding: 3.2rem 0;
+      }
+
+      .hero {
+        padding: 1rem 0 2.6rem;
+      }
+
+      .hero-copy,
+      .search-card,
+      .trust-card,
+      .step-card,
+      .contact-card {
+        padding: 1.2rem;
+      }
+
+      .hero-copy p,
+      .search-header p,
+      .section-head p,
+      .contact-card p {
+        font-size: 0.96rem;
       }
 
       .hero-actions,
@@ -613,9 +764,77 @@
         grid-template-columns: 1fr;
       }
 
+      .product-card {
+        grid-template-columns: 108px 1fr;
+        grid-template-rows: none;
+        align-items: stretch;
+      }
+
       .hero-image img,
       .contact-visual img {
         min-height: 320px;
+      }
+
+      .product-card img {
+        height: 100%;
+        min-height: 100%;
+      }
+
+      .product-body {
+        padding: 0.9rem;
+        gap: 0.65rem;
+      }
+
+      .product-body p,
+      .tag-chip {
+        font-size: 0.78rem;
+      }
+
+      .results-meta {
+        font-size: 0.86rem;
+      }
+
+      .menu-panel .btn {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .container {
+        width: min(100% - 1rem, 1180px);
+      }
+
+      .topbar {
+        padding-top: 0.75rem;
+      }
+
+      .hero-image img,
+      .contact-visual img {
+        min-height: 260px;
+      }
+
+      .hero-badge {
+        left: 0.85rem;
+        right: 0.85rem;
+        bottom: 0.85rem;
+        max-width: none;
+      }
+
+      .search-input {
+        padding: 0.95rem 1rem;
+        font-size: 0.95rem;
+      }
+
+      .product-card {
+        grid-template-columns: 92px 1fr;
+      }
+
+      .product-body h3 {
+        font-size: 1rem;
+      }
+
+      .tag-chip {
+        padding: 0.3rem 0.55rem;
       }
     }
   </style>
@@ -638,6 +857,26 @@
           <a href="#how">How It Works</a>
           <a href="#contact">Contact</a>
         </div>
+        <details class="menu-toggle">
+          <summary aria-label="Open menu">
+            <span class="burger"></span>
+          </summary>
+          <div class="menu-panel">
+            <div class="menu-links">
+              <a href="#search">Search</a>
+              <a href="#products">Products</a>
+              <a href="#trust">Trust</a>
+              <a href="#how">How It Works</a>
+              <a href="#contact">Contact</a>
+            </div>
+            <div class="menu-contact">
+              <b>Quick Contact</b>
+              <span>09163606206</span>
+              <span>Fast response and easy WhatsApp ordering</span>
+            </div>
+            <a class="btn btn-primary" href="https://wa.me/2349163606206?text=Hello%20I%20want%20to%20order%20medicines" target="_blank" rel="noopener noreferrer">Order on WhatsApp</a>
+          </div>
+        </details>
       </nav>
     </div>
   </header>
@@ -944,6 +1183,7 @@
     const resultsCount = document.getElementById("resultsCount");
     const resultsHint = document.getElementById("resultsHint");
     const emptyState = document.getElementById("emptyState");
+    const menuToggle = document.querySelector(".menu-toggle");
     const featuredProducts = products.filter((product) => product.featured);
 
     function makeWhatsAppLink(productName) {
@@ -997,6 +1237,14 @@
     searchInput.addEventListener("input", (event) => {
       filterProducts(event.target.value);
     });
+
+    if (menuToggle) {
+      menuToggle.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          menuToggle.removeAttribute("open");
+        });
+      });
+    }
 
     renderProducts(featuredProducts);
   </script>
